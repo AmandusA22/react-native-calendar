@@ -290,7 +290,6 @@ export default class Calendar extends Component {
   }
 // `${localizedMonth} ${this.state.currentMoment.year()}`
   renderTopBar() {
-    console.log(this.props)
     const localizedMonth = this.props.monthNames[this.state.currentMoment.month()];
     return this.props.showControls
       ? (
