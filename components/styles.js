@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   controlButton: {
-     marginTop: 3,
+     marginTop: 10,
   },
   controlButtonText: {
     margin: 10,
