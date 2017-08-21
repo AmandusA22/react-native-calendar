@@ -17,6 +17,13 @@ import styles from './styles';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const VIEW_INDEX = 2;
 
+function getNumberOfWeeks(month, weekStart) {
+  const firstDay = moment(month).startOf('month').day();
+  const offset = (firstDay - weekStart + 7) % 7;
+  const days = moment(month).daysInMonth();
+  return Math.ceil((offset + days) / 7);
+}
+
 export default class Calendar extends Component {
 
   state = {
@@ -89,9 +96,10 @@ export default class Calendar extends Component {
     }
 
     if (this.props.calendarFormat !== props.calendarFormat && props.calendarFormat === 'monthly') {
+      const numOfWeeks = getNumberOfWeeks(this.state.currentMonthMoment, this.props.weekStart);
       this.setState({
         calendarFormat: props.calendarFormat,
-        calendarHeight: 320
+        calendarHeight: numOfWeeks * this.state.rowHeight,
       });
     }
 
