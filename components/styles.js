@@ -66,6 +66,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     alignSelf: 'center',
   },
+  dayFiller: {
+    color: 'rgba(255,255,255,0.4)',
+  },
   eventIndicatorFiller: {
     marginTop: 3,
     borderColor: 'transparent',

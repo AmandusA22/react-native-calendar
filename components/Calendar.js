@@ -232,29 +232,28 @@ export default class Calendar extends Component {
       const isoWeekday = (renderIndex + weekStart) % 7;
       const thisMoment = moment(startOfArgMoment).add(dayIndex, 'day');
 
-      if (dayIndex >= 0 && dayIndex < argDaysCount) {
-        const isSelected = selectedMoment.isSame(thisMoment);
-        days.push((
-          <Day
-            startOfMonth={startOfArgMoment}
-            isWeekend={isoWeekday === 0 || isoWeekday === 6}
-            key={`${renderIndex}`}
-            onPress={() => {
-              this.selectDate(thisMoment);
-              this.props.onDateSelect && this.props.onDateSelect(thisMoment ? thisMoment.format() : null);
-            }}
-            caption={`${thisMoment.format('D')}`}
-            isToday={todayMoment.format('YYYY-MM-DD') == thisMoment.format('YYYY-MM-DD')}
-            isSelected={isSelected}
-            event={eventsMap[thisMoment.format('YYYY-MM-DD')] ||
-                   eventsMap[thisMoment.format('YYYYMMDD')]}
-            showEventIndicators={this.props.showEventIndicators}
-            customStyle={this.props.customStyle}
-          />
-        ));
-      } else {
-        days.push(<Day key={`${renderIndex}`} filler customStyle={this.props.customStyle} />);
-      }
+      const isFiller = dayIndex < 0 || dayIndex >= argDaysCount;
+      const isSelected = selectedMoment.isSame(thisMoment);
+      days.push((
+        <Day
+          startOfMonth={startOfArgMoment}
+          isWeekend={isoWeekday === 0 || isoWeekday === 6}
+          key={`${renderIndex}`}
+          onPress={() => {
+            this.selectDate(thisMoment);
+            this.props.onDateSelect && this.props.onDateSelect(thisMoment ? thisMoment.format() : null);
+          }}
+          caption={`${thisMoment.format('D')}`}
+          isToday={todayMoment.format('YYYY-MM-DD') == thisMoment.format('YYYY-MM-DD')}
+          isSelected={isSelected}
+          event={eventsMap[thisMoment.format('YYYY-MM-DD')] ||
+                 eventsMap[thisMoment.format('YYYYMMDD')]}
+          showEventIndicators={this.props.showEventIndicators}
+          customStyle={this.props.customStyle}
+          filler={isFiller}
+        />
+      ));
+
       if (renderIndex % 7 === 6) {
         weekRows.push(
           <View
