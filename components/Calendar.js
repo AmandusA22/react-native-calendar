@@ -92,7 +92,12 @@ export default class Calendar extends Component {
 
   componentWillReceiveProps(props) {
     if (props.selectedDate) {
-      this.setState({ selectedMoment: props.selectedDate });
+
+       this.setState({ selectedMoment: props.selectedDate });
+    }
+    if (props.selectedDate !== this.props.selectedDate) {
+      this.setState({ selectedMoment: moment(props.selectedDate),
+        currentMoment: moment(props.selectedDate) });
     }
 
     if (this.props.calendarFormat !== props.calendarFormat && props.calendarFormat === 'monthly') {
@@ -296,7 +301,7 @@ export default class Calendar extends Component {
       </View>
     );
   }
-// `${localizedMonth} ${this.state.currentMoment.year()}`
+
   renderTopBar() {
     const localizedMonth = this.props.monthNames[this.state.currentMoment.month()];
     return this.props.showControls
@@ -317,7 +322,7 @@ export default class Calendar extends Component {
             style={[styles.controlButton, this.props.customStyle.controlButton]}
             onPress={this.onNext}
           >
-              {this.props.nextButtonText}
+            {this.props.nextButtonText}
           </TouchableOpacity>
         </View>
       )
@@ -333,7 +338,6 @@ export default class Calendar extends Component {
   render() {
     const calendarDates = this.getStack(this.state.currentMoment);
     const eventDatesMap = this.prepareEventDates(this.props.eventDates, this.props.events);
-
     return (
       <View style={[styles.calendarContainer, this.props.customStyle.calendarContainer, { height: this.state.calendarHeight }]}>
         {this.renderTopBar()}
